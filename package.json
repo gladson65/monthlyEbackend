@@ -1,0 +1,12 @@
+{
+  "name": "monthlyebackend",
+  "version": "1.0.0",
+  "main": "server.js",
+  "scripts": {
+    "test": "npm start",
+    "start": "node server.js"
+  },
+  "author": "Gladson Routh",
+  "license": "ISC",
+  "description": ""
+}

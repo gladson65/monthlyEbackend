@@ -14,9 +14,9 @@ export function register(req, res) {
     if (!password) return res.status(400).json({message: "password field is missing"});
 
     // field validation
-    if (name.length < 3) return res.status(400).json({message: "Username must be 3 or more characters."});
+    if (name.length < 3) return res.status(400).json({message: "name must be 3 or more characters."});
     let testEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-    if (!testEmail) return res.status(400).json({error: "email", key:"email", message: "Invalid Email Format"})
+    if (!testEmail) return res.status(400).json({message: "Invalid Email Format"});
     let testPassword = /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*\W)(?!.* ).{8,16}$/.test(password);
     if (!testPassword) return res.status(400).json({message: "Password must contain one digit from 1 to 9, one lowercase letter, one uppercase letter, one special character, no space, and it must be 8-16 characters long."});
 

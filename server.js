@@ -2,6 +2,7 @@ import express from 'express';
 import mongoose from 'mongoose'
 import env from 'dotenv';
 import cors from 'cors';
+import { monthlyERoutes } from './Routes/monthlyEroutes.js';
 
 // configuring env
 env.config();
@@ -33,3 +34,7 @@ db.on("open", ()=> {
 db.on("error", ()=> {
     console.log("Database connection is not successful");
 })
+
+
+// shared monthlyServer to the routes
+monthlyERoutes(monthlyServer); 

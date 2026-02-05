@@ -1,4 +1,5 @@
 import express from 'express';
+import mongoose from 'mongoose'
 import env from 'dotenv';
 import cors from 'cors';
 
@@ -16,3 +17,19 @@ monthlyServer.listen(port, ()=> {
 monthlyServer.use(express.json());
 // cors middleware
 monthlyServer.use(cors());
+
+
+// MongoDB database connection code
+// Atlas database url
+const mongoUrl = process.env.MongoUrl;
+mongoose.connect(mongoUrl, {
+    serverSelectionTimeoutMS: 5000
+}).catch(error => console.log(error.reason));
+// check database connection;
+const db = mongoose.connection;
+db.on("open", ()=> {
+    console.log("Database connection is successful")
+});
+db.on("error", ()=> {
+    console.log("Database connection is not successful");
+})

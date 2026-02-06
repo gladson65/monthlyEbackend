@@ -32,9 +32,9 @@ export function register(req, res) {
                 password: bcrypt.hashSync(password, 10)
             })
 
-            // /save the newUser in the database
+            // save the newUser in the database
             newUser.save().then((data)=> {
-                return res.status(201).json({message: "User Registration Successfull", user: data})
+                return res.status(201).json({key: "success", message: "User Registration Successfull", user: data})
             })
         }
         else {

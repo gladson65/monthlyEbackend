@@ -42,7 +42,7 @@ export function register(req, res) {
         }
     
     }).catch((error)=> {
-        return res.send(500).json({error: error.message});
+        return res.status(500).json({error: error.message});
     })
     
 } 
@@ -54,29 +54,29 @@ export function login(req, res) {
     const { email, password } = req.body;
 
     // key validation
-    if (!email) return res.send(400).json({message: "email field is missing"});
-    if (!password) return res.send(400).json({message: "password field is missing"});
+    if (!email) return res.status(400).json({message: "email field is missing"});
+    if (!password) return res.status(400).json({message: "password field is missing"});
 
     // check if registered email is present or not
     userModel.findOne({email: email}).then((data)=> {
         // if no data found then user is not registered
-        if (!data) return res.send(404).json({message: "user is not registered"});
+        if (!data) return res.status(404).json({message: "user is not registered"});
 
         // if email is registered then check password first
         let isPasswordvalid = bcrypt.compareSync(password, data.password);
         // if password dosen't matched then return with "403 http status"
         if (!isPasswordvalid){
-            return send(403).json({message: "Invalid password, please try again!"});
+            return res.status(403).json({message: "Invalid password, please try again!"});
         }
         // if password matched
         else {
             // generate jwt token
             let token = jwt.sign({id: data._id}, `${process.env.SecretKey}`, {expiresIn: "1d"});
             // then return user data and token
-            return send(200).json({message: "Login successful!", name: data.name, email: data.email, token: token});
+            return res.status(200).json({message: "Login successful!", name: data.name, email: data.email, token: token});
         }
 
     }).catch((error)=> {
-        return send(500).json({error: error.message});
+        return res.status(500).json({error: error.message});
     })
 }

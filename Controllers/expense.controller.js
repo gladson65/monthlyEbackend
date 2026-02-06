@@ -1,4 +1,4 @@
-import expenseModel from "../Models/expense.model";
+import expenseModel from "../Models/expense.model.js";
 
 
 // function for store expenses

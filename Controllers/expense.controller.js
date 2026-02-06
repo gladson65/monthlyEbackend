@@ -10,6 +10,9 @@ export function storeExpense(req, res) {
     if (!spendOn) return res.status(400).json({message: "spendOn key is missing"});
     if (!money) return res.status(400).json({message: "money key is missing"});
 
+    // field validation
+    if (spendOn.length < 1) return res.sttaus(400).json({message: "Kindly input one item in spendOn"})
+
     // preparing data to store inside expenseModel
     const newExpense = new expenseModel({
         spendOn,

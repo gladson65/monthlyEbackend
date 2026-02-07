@@ -73,7 +73,7 @@ export function login(req, res) {
             // generate jwt token
             let token = jwt.sign({id: data._id}, `${process.env.SecretKey}`, {expiresIn: "1d"});
             // then return user data and token
-            return res.status(200).json({message: "Login successful!", name: data.name, email: data.email, token: token});
+            return res.status(200).json({key: "success", message: "Login successful!", name: data.name, email: data.email, token: token});
         }
 
     }).catch((error)=> {

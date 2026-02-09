@@ -1,5 +1,5 @@
 import jwt from 'jsonwebtoken';
-import userModel from '../Models/users.model';
+import userModel from '../Models/users.model.js';
 
 
 // function for verify token

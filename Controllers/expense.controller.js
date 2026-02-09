@@ -25,7 +25,7 @@ export function storeExpense(req, res) {
             return res.status(400).json({message: "request failed. Try again!"});
         }
 
-        return res.status(201).json({message: "your expense created successfully"});
+        return res.status(201).json({key: "success", message: "your expense created successfully"});
     
     }).catch((error)=> {
         return res.status(500).json({message: error.message});

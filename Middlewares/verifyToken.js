@@ -30,6 +30,6 @@ export function verifyToken(req, res, next) {
     }
     // if token is not present
     else {
-        return req.status(403).json({message: "Access token is not present."});
+        return res.status(403).json({message: "Access token is not present."});
     }
 }

@@ -14,6 +14,10 @@ const expenseSchema = new Schema({
     money: {
         type: Number,
         required: true
+    },
+    email: {
+        type: String,
+        required: true
     }
 }, time)
 

@@ -6,5 +6,5 @@ export function monthlyERoutes(monthlyServer) {
     monthlyServer.post("/api/register", register);
     monthlyServer.post("/api/login", login);
     monthlyServer.post("/api/storeExpense", verifyToken , storeExpense);
-    monthlyServer.get("/api/getExpenses/:email", verifyToken, getExpense);
+    monthlyServer.get("/api/getExpenses/:userID", verifyToken, getExpense);
 }

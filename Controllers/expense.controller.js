@@ -50,10 +50,13 @@ export function storeExpense(req, res) {
 // function for getting expense data
 export function getExpense(req, res) {
 
-    const { email } = req.params;
+    const { userID } = req.params;
+    const { email } = req.body;
 
-    // email key validation
-    if (!email) return res.status(400).json({message: "Email is missing"});
+    // userID key validation
+    if (!userID) return res.status(400).json({message: "userID is missing"});
+     // email key validation
+    if (!email) return res.status(400).json({message: "email is missing"});
 
     // field validation
     let isValidEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
@@ -65,12 +68,12 @@ export function getExpense(req, res) {
         if (!user) return res.status(400).json({message: "User is not registered"});
 
          // find in expenseModel
-        expenseModel.find({email: email}).then((expenses)=> {
+        expenseModel.find({userID: userID}).then((expenses)=> {
             if(!expenses) {
                 return res.status(404).json({message: "No expense found"});
             }
 
-            return res.status(200).json({expenses: expenses});
+            return res.status(200).json({expenses: expenses.length === 0 ? 'No Expense found': expenses});
         
         }).catch((error)=> {
             return res.status(500).json({error: error.message});

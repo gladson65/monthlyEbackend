@@ -5,12 +5,13 @@ import userModel from "../Models/users.model.js";
 // function for store expenses
 export function storeExpense(req, res) {
 
-    const { spendOn, money, email } = req.body;
+    const { spendOn, money, email, userID } = req.body;
 
     // key validation
     if (!spendOn) return res.status(400).json({message: "spendOn key is missing"});
     if (!money) return res.status(400).json({message: "money key is missing"});
     if (!email) return res.status(400).json({message: "email key is missing"});
+    if (!userID) return res.status(400).json({message: "userID is missing"});
 
     // field validation
     if (spendOn.length < 1) return res.status(400).json({message: "Kindly input one item in spendOn"})
@@ -25,7 +26,8 @@ export function storeExpense(req, res) {
         const newExpense = new expenseModel({
             spendOn,
             money,
-            email
+            email,
+            userID
         })
 
         // save newExpense into the database
@@ -48,10 +50,10 @@ export function storeExpense(req, res) {
 // function for getting expense data
 export function getExpense(req, res) {
 
-    const { email } = req.body;
+    const { email } = req.params;
 
     // email key validation
-    if (!email) return res.status(400).json({message: "Email key is missing"});
+    if (!email) return res.status(400).json({message: "Email is missing"});
 
     // field validation
     let isValidEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);

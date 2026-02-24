@@ -18,6 +18,10 @@ const expenseSchema = new Schema({
     email: {
         type: String,
         required: true
+    },
+    userID: {
+        type: String,
+        required: true
     }
 }, time)
 

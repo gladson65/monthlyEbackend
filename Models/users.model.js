@@ -13,8 +13,18 @@ const userSchema = new Schema({
     password: {
         type: String,
         required: true
+    },
+    isVerified: {
+        type: Boolean,
+        default: false
+    },
+    otp: {
+        type: String
+    },
+    otpExpiry: {
+        type: Date
     }
-})
+}, { timestamps: true })
 
 const userModel = mongoose.model('monthlyE-User', userSchema);
 export default userModel;

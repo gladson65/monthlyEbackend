@@ -1,10 +1,10 @@
 import userModel from '../Models/users.model.js';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
-
+import crypto from 'crypto';
 
 // business logic for user register
-export function register(req, res) {
+export async function register(req, res) {
 
     const { name, email, password } = req.body;
 
@@ -19,23 +19,33 @@ export function register(req, res) {
     if (!testEmail) return res.status(400).json({message: "Invalid Email Format"});
     let testPassword = /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*\W)(?!.* ).{8,16}$/.test(password);
     if (!testPassword) return res.status(400).json({message: "Password must contain one digit from 1 to 9, one lowercase letter, one uppercase letter, one special character, no space, and it must be 8-16 characters long."});
-
+    
     // check the email is already exist or not
     userModel.findOne({email: email}).then((data)=> {
 
         // if not previous data then create new
         if (!data) {
+
+            // Generate OTP
+            const otp = crypto.randomInt(100000, 999999).toString();
+
             // prepare data
             const newUser = new userModel({
                 name,
                 email,
-                password: bcrypt.hashSync(password, 10)
+                password: bcrypt.hashSync(password, 10),
+                otp,
+                otpExpiry: Date.now() + 5 * 60 * 1000 // valid for 5 minutes
             })
 
             // save the newUser in the database
             newUser.save().then((data)=> {
-                return res.status(201).json({key: "success", message: "User Registration Successfull", user: data})
-            })
+                return res.status(201).json({key: "success", message: "User Registration Successfull. Please verify your email with OTP.", user: data});
+                
+            }).catch((error) => {
+                return res.status(500).json({ error: error.message });
+            });
+                
         }
         else {
             return res.status(400).json({message: "User already exist, try with another email"})
